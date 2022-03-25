@@ -1,12 +1,23 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import NumberButton from "./components/NumberButton.vue"
+import { ref } from "vue"
+const numbers = ref([]);
+const randomNum = () => {
+  while (numbers.value.length < 4) {
+    var r = Math.floor(Math.random() * 9) + 1;
+    if (numbers.value.indexOf(r) === -1) numbers.value.push(r);
+  }
+}
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + Vite" />
+  <div>
+    <h1 align="center"> Hello </h1>
+    <button @click="randomNum">random</button>
+    <NumberButton :items="numbers" />
+    <p> {{ numbers }} </p>
+
+  </div>
 </template>
 
 <style>
@@ -18,4 +29,5 @@ import HelloWorld from './components/HelloWorld.vue'
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>
