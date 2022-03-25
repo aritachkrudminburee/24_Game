@@ -1,19 +1,19 @@
 <script setup>
-defineEmits(['NumberMe'])
+defineEmits(['operatorMe'])
 defineProps({
     items: {
         type: [Array, Object],
         require: true
     }
 })
-
+const operators = ['+', '-', '*', '/','(',')']
 </script>
  
 <template>
     <div class="grid-container">
-        <div v-for="(item, index) in items" :key="index">
+        <div v-for="(item, index) in operators" :key="index">
             <div class="grid-number">
-                <button class="button-color" @click="$emit('NumberMe', item.toString())">{{ item }}</button>
+                <button class="button-color" @click="$emit('operatorMe', item)">{{ item }}</button>
             </div>
         </div>
     </div>
