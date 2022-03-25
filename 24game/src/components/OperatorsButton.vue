@@ -1,11 +1,5 @@
 <script setup>
 defineEmits(['operatorMe'])
-defineProps({
-    items: {
-        type: [Array, Object],
-        require: true
-    }
-})
 const operators = ['+', '-', '*', '/','(',')']
 </script>
  
