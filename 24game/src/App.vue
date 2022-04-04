@@ -14,6 +14,8 @@ const inputAns = ref('');
 const dataError = [1111, 1678, 3467]
 const isError = ref(false);
 const numbers = ref([]);
+const status = ref(false)
+const statusSummit = ref(false)
 const randomNum = () => {
   while (numbers.value.length < 4) {
     var r = Math.floor(Math.random() * 9) + 1;
@@ -26,6 +28,7 @@ const randomNum = () => {
     console.log(intArr)
     if (checkArray(intArr.sort(), Array.from(numbers.value).sort()) === 1) { numbers.value = []; randomNum(); }
   }
+  status.value = true;
   console.log(numbers.value)
 }
 
@@ -34,6 +37,8 @@ const resetNum = () => {
   input.value = ''
   isError.value = false
   inputAns.value = ''
+  status.value = false
+  statusSummit.value = false
 }
 
 const addInput = () => {
@@ -93,29 +98,42 @@ const sumAns = computed(() => {
 //////////////////////////////////////
 
 
-const cal = (a) => { input.value = input.value + a ,alert("you choose : " + a)}
+const cal = (a) => { input.value = input.value + a, alert("you choose : " + a) }
 
-const remove = () => { input.value = input.value.slice(0, -1)}
+const remove = () => { input.value = input.value.slice(0, -1) }
+
+const checkvalue = () => {
+  try {
+    if(input.value === ""){ return test.value = false; }
+      inputAns.value = input.value
+var reCheckNum = Array.from(numbers.value)
+    console.log(reCheckNum)
+    console.log(eval(inputAns.value));//เปลี่ยนจาก String ที่ได้มาจาก input ที่กรอกเป็น สมการ แล้วแสดงออกมา
+    var number = justNumbers(inputAns.value);
+    console.log(number);}
+  catch (err) {
+    return statusSummit.value = false;
+   }
+    return statusSummit.value = true;
+}
 
 
 </script>
 <template>
   <div>
     <h1 align="center">Hello</h1>
-    
     <RandomButton @randomNumbers="randomNum()" />
-    <NumberButton :items="numbers" @NumberMe="cal($event)" />
-    <RemoveButton @removeN="resetNum()" />
-    <OperatorsButton @operatorMe="cal($event)" />
-    <RemoveInputButton @removeI="remove()"/>
-
-    <h4>Your Answer :</h4>
-    <input type="text" v-model="input" />
+    <NumberButton :items="numbers" @NumberMe="cal($event) ; checkvalue()" />
+    <div v-show="status">
+      <RemoveButton @removeN="resetNum()" />
+      <OperatorsButton @operatorMe="cal($event) ; checkvalue() " />
+      <RemoveInputButton @removeI="remove() ; checkvalue() " />
+      <SubmitButton :disabled="!statusSummit" @submit="addInput();" />
+      <h4>Your Answer :</h4>
+      <input type="text" v-model="input" />
+    </div>
   </div>
-
-    <SubmitButton @submit="addInput()" />
-
-  <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4>
+  <!-- <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4> -->
   <p
     v-show="isError"
   >Your input is not number in random set or have duplicate number, please input again</p>
