@@ -1,4 +1,5 @@
 <script setup>
+
 defineEmits(['NumberMe'])
 defineProps({
     items: {
@@ -6,7 +7,6 @@ defineProps({
         require: true
     }
 })
-
 </script>
  
 <template>

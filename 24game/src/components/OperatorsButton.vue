@@ -1,4 +1,5 @@
 <script setup>
+
 defineEmits(['operatorMe'])
 const operators = ['+', '-', '*', '/','(',')']
 </script>

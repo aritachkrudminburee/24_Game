@@ -1,0 +1,24 @@
+{
+  "history": [
+    {
+      "id": 1,
+      "number": [
+        1,
+        4,
+        5,
+        6
+      ],
+      "result": "win"
+    },
+    {
+      "number": [
+        5,
+        4,
+        6,
+        7
+      ],
+      "result": "Error for value number",
+      "id": 2
+    }
+  ]
+}

@@ -6,14 +6,54 @@ import SubmitButton from "./components/SubmitButton.vue"
 import RemoveButton from './components/RemoveButton.vue'
 import RemoveInputButton from './components/RemoveInputButton.vue'
 
-import { ref, computed } from 'vue'
+import { ref, computed, onBeforeMount, onMounted, onBeforeUpdate, onUpdated, onBeforeUnmount, onUnmounted } from 'vue'
+import HistoryList from './components/HistoryList.vue'
 
 ////////////////////////////////////// ห้ามเเก้ของเก่า ////////////////
 const input = ref('');
 const inputAns = ref('');
+const testValue = ref('');
 const dataError = [1111, 1678, 3467]
-const isError = ref(false);
 const numbers = ref([]);
+const status = ref(false)
+const statusSummit = ref(false)
+const history = ref([])
+const result = ref ('')
+/////fetch
+
+//Get
+onBeforeMount(async () => {
+  await getHistory()
+})
+
+const getHistory = async () => {
+  const res = await fetch('http://localhost:5000/history')
+  if (res.status === 200) {
+    history.value = await res.json()
+    console.log(history.value)
+    return history.value
+  } else console.log('error, cannot get notes')
+}
+
+// POST
+const createNewhistory = async (numberdata, resultdata) => {
+  addInput();
+  const res = await fetch('http://localhost:5000/history', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: JSON.stringify({ number: numbers.value, result: result.value })
+  })
+  if (res.status === 201) {
+    const addedhistory = await res.json()
+    history.value.push(addedhistory)
+    console.log('added sucessfully')
+  } else console.log('error, cannot be added')
+}
+
+////
+
 const randomNum = () => {
   while (numbers.value.length < 4) {
     var r = Math.floor(Math.random() * 9) + 1;
@@ -26,14 +66,17 @@ const randomNum = () => {
     console.log(intArr)
     if (checkArray(intArr.sort(), Array.from(numbers.value).sort()) === 1) { numbers.value = []; randomNum(); }
   }
+  status.value = true;
   console.log(numbers.value)
 }
 
 const resetNum = () => {
   numbers.value = []
   input.value = ''
-  isError.value = false
   inputAns.value = ''
+  testValue.value = ''
+  status.value = false
+  statusSummit.value = false
 }
 
 const addInput = () => {
@@ -73,19 +116,17 @@ const check = () => {
   console.log(checkNum.sort())
   if (checkArray(reCheckNum.sort(), checkNum.sort()) !== -1) {
     if (24 == eval(inputAns.value)) {
-      alert("win")
-      isError.value = false
+      result.value = "win"
     }
     else {
-      alert("Lose")
-      isError.value = false
+      result.value = "lose"
     }
   }
   else {
-    alert("Error for value number")
-    isError.value = true
+    result.value = "Error for value number"
   }
-  input.value = ''
+    alert(result.value)
+input.value = ''
 }
 const sumAns = computed(() => {
   return eval(inputAns.value);
@@ -93,32 +134,49 @@ const sumAns = computed(() => {
 //////////////////////////////////////
 
 
-const cal = (a) => { input.value = input.value + a ,alert("you choose : " + a)}
+const cal = (a) => { input.value = input.value + a, alert("you choose : " + a) }
 
-const remove = () => { input.value = input.value.slice(0, -1)}
+const remove = () => { input.value = input.value.slice(0, -1) }
 
+const checkvalue = () => {
+  try {
+    if (input.value === "") { return statusSummit.value = false; }
+    eval(input.value)
+    justNumbers(input.value);
+  } catch (err) {
+    return statusSummit.value = false;
+  }
+  return statusSummit.value = true;
+}
+
+//////////// lift cycle
+// onBeforeMount(() => alert("onBeforeMount")) 
+// onMounted (() => alert("onMounted"))
+// onBeforeUpdate(() => alert("onBeforeUpdate" + input.value))
+onUpdated(() => checkvalue())
+
+/////////////
 
 </script>
 <template>
   <div>
     <h1 align="center">Hello</h1>
-    
     <RandomButton @randomNumbers="randomNum()" />
-    <NumberButton :items="numbers" @NumberMe="cal($event)" />
-    <RemoveButton @removeN="resetNum()" />
-    <OperatorsButton @operatorMe="cal($event)" />
-    <RemoveInputButton @removeI="remove()"/>
+    <NumberButton :items="numbers" @NumberMe="cal($event) ;" />
+    <div v-show="status">
+      <RemoveButton @removeN="resetNum()" />
+      <OperatorsButton @operatorMe="cal($event) ;  " />
+      <RemoveInputButton @removeI="remove() ; " />
+      <p v-if="statusSummit">
+        <SubmitButton  @submit="createNewhistory()" />
+      </p>
 
-    <h4>Your Answer :</h4>
-    <input type="text" v-model="input" />
+      <h4>Your Answer :</h4>
+      <input type="text" v-model="input" />
+    </div>
+    <HistoryList :historys="history" />
+    <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4>
   </div>
-
-    <SubmitButton @submit="addInput()" />
-
-  <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4>
-  <p
-    v-show="isError"
-  >Your input is not number in random set or have duplicate number, please input again</p>
 </template>
 
 <style>
