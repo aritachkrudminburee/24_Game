@@ -5,6 +5,7 @@ const operators = ['+', '-', '*', '/','(',')']
 </script>
  
 <template>
+<p>Operators</p>
     <div class="grid-container">
         <div v-for="(item, index) in operators" :key="index">
             <div class="grid-number">

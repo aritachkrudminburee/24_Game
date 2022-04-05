@@ -9,7 +9,7 @@ defineProps({
 
 <template>
   <div>
-    <h2>History List</h2>
+    <h1>History List</h1>
     <ul>
       <div v-for="(history, index) in historys" :key="index">
         round :{{ history.id }}, Number : {{ history.number }}, result: {{ history.result }}

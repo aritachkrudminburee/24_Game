@@ -4,7 +4,7 @@ defineEmits(['randomNumbers'])
  
 <template>
     <button @click="$emit('randomNumbers')">
-        Random
+        Start
     </button>
 </template>
  

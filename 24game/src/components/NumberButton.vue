@@ -10,6 +10,7 @@ defineProps({
 </script>
  
 <template>
+<p>Number Generator</p>
     <div class="grid-container">
         <div v-for="(item, index) in items" :key="index">
             <div class="grid-number">

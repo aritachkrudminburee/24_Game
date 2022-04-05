@@ -1,14 +1,16 @@
 <script setup>
-import { onUnmounted } from 'vue';
 
 defineEmits(['submit'])
-onUnmounted (() => alert("cant use submit because input isnt equation"))
+defineProps({
+    inputs: {
+        type: String,
+    }
+})
 
 </script>
  
 <template>
-
-    <button @click="$emit('submit')" >submit </button>
+    <button @click="$emit('submit')">submit</button>
 </template>
  
 <style>
