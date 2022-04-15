@@ -1,60 +1,46 @@
 <script setup>
 import NumberButton from "../components/NumberButton.vue"
 import OperatorsButton from "../components/OperatorsButton.vue"
-import RandomButton from "../components/RandomButton.vue"
 import SubmitButton from "../components/SubmitButton.vue"
 import RemoveButton from '../components/RemoveButton.vue'
 import RemoveInputButton from '../components/RemoveInputButton.vue'
+import { ref, computed, onUpdated , } from 'vue'
+import { useRoute,useRouter  } from 'vue-router'
 
-import { ref, computed, onUpdated } from 'vue'
-
-////////////////////////////////////// ห้ามเเก้ของเก่า ////////////////
+const appRouter = useRouter()
+let { params } = useRoute()
 const input = ref('');
 const inputAns = ref('');
 const testValue = ref('');
-const dataError = [1111, 1678, 3467]
 const numbers = ref([]);
 const status = ref(false)
 const statusSummit = ref(false)
-const history = ref([])
 const result = ref('')
-/////fetch
 
-// POST
-const createNewhistory = async () => {
-    addInput();
-    const res = await fetch('http://localhost:5000/history', {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify({ number: numbers.value, result: result.value })
-    })
-    if (res.status === 201) {
-        const addedhistory = await res.json()
-        history.value.push(addedhistory)
-        console.log('added sucessfully')
-    } else console.log('error, cannot be added')
-    resetNum();
-}
-
-////
-
-const randomNum = () => {
-    while (numbers.value.length < 4) {
-        var r = Math.floor(Math.random() * 9) + 1;
-        if (numbers.value.indexOf(r) === -1) numbers.value.push(r);
-        console.log(r)
-    }
-    for (let i = 0; i < dataError.length; i++) {
-        let myFunc = num => Number(num);
-        var intArr = Array.from(String(dataError[i]), myFunc);
-        console.log(intArr)
-        if (checkArray(intArr.sort(), Array.from(numbers.value).sort()) === 1) { numbers.value = []; randomNum(); }
-    }
+const continueHis = () => {
+ numbers.value.push(parseInt(params.Number1));
+ numbers.value.push(parseInt(params.Number2));
+ numbers.value.push(parseInt(params.Number3));
+ numbers.value.push(parseInt(params.Number4));
     status.value = true;
     console.log(numbers.value)
 }
+
+
+const editHistory = async () => {
+    addInput();
+  const res = await fetch(`http://localhost:5000/history/${params.id}`, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+  body: JSON.stringify({ number: numbers.value, result: result.value })
+    })
+  await res.json()
+appRouter.push({name: 'historylist' })
+};
+
+
 
 const resetNum = () => {
     numbers.value = []
@@ -77,11 +63,8 @@ const justNumbers = (string) => {
 const checkArray = (arraya, arrayb) => {
     let a = arraya;
     let b = arrayb;
-<<<<<<< HEAD
-=======
     console.log(a)
     console.log(b)
->>>>>>> ee67e46458e309cc5155e550e348ad2ed0996acf
     for (let i = 0; i < a.length; i++) {
         if (a[i] !== b[i]) {
             return -1
@@ -107,17 +90,10 @@ const check = () => {
     console.log(checkNum.sort())
     if (checkArray(reCheckNum.sort(), checkNum.sort()) !== -1) {
         if (24 == eval(inputAns.value)) {
-<<<<<<< HEAD
-            result.value = "win"
-        }
-        else {
-            result.value = "lose"
-=======
             result.value = "WIN"
         }
         else {
             result.value = "LOSE"
->>>>>>> ee67e46458e309cc5155e550e348ad2ed0996acf
         }
     }
     else {
@@ -128,7 +104,6 @@ const check = () => {
 const sumAns = computed(() => {
     return eval(inputAns.value);
 })
-//////////////////////////////////////
 
 
 const cal = (a) => { input.value = input.value + a, alert("you choose : " + a) }
@@ -146,39 +121,14 @@ const checkvalue = () => {
     return statusSummit.value = true;
 }
 
-//////////// lift cycle
-// onBeforeMount(() => alert("onBeforeMount")) 
-// onMounted (() => alert("onMounted"))
-// onBeforeUpdate(() => alert("onBeforeUpdate" + input.value))
 onUpdated(() => checkvalue())
-
-/////////////
 
 </script>
 <template>
     <div>
         <h1 align="center">24 Game</h1>
         <p v-if="!status">
-<<<<<<< HEAD
-        <p>Click To Button To Start The Game</p>
-        <RandomButton @randomNumbers="randomNum()" />
-        </p>
-        <div v-show="status">
-            <p>Click To Button To Restart</p>
-            <RemoveButton @removeN="resetNum()" />
-            <NumberButton :items="numbers" @NumberMe="cal($event) ;" />
-            <OperatorsButton @operatorMe="cal($event) ;  " />
-            <p v-if="input !== ''">
-                <RemoveInputButton @removeI="remove() ; " />
-            </p>
-            <p v-if="statusSummit">
-                <SubmitButton @submit="createNewhistory()" />
-            </p>
-            <h4>Your Answer :</h4>
-            <input type="text" v-model="input" />
-=======
-        <p>Click Random Button To Start The Game</p>
-        <RandomButton @randomNumbers="randomNum()" />
+        <button @click="continueHis">Start To Retry</button>
         </p>
         <div v-else-if="status">
             <NumberButton :items="numbers" @NumberMe="cal($event) ;" /> <br/>
@@ -191,10 +141,9 @@ onUpdated(() => checkvalue())
             <OperatorsButton @operatorMe="cal($event) ;  " />
             
             <p v-if="statusSummit">
-                <SubmitButton @submit="createNewhistory()" />
+                <SubmitButton @submit="editHistory()" />
             </p>
             
->>>>>>> ee67e46458e309cc5155e550e348ad2ed0996acf
         </div>
         <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4>
     </div>
@@ -202,16 +151,7 @@ onUpdated(() => checkvalue())
 
 <style>
 #app {
-<<<<<<< HEAD
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-=======
     text-align: center;
     /* margin-top: 50px; */
->>>>>>> ee67e46458e309cc5155e550e348ad2ed0996acf
 }
 </style>

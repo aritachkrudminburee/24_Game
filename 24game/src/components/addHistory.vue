@@ -26,4 +26,3 @@ console.log(newHistory.value)
  
 <style>
 </style>
-

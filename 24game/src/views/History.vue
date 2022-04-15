@@ -3,6 +3,10 @@
 import { ref , onBeforeMount } from 'vue'
 import HistoryList from '../components/HistoryList.vue'
 const history = ref([])
+<<<<<<< HEAD
+=======
+const profile = ref([])
+>>>>>>> ee67e46458e309cc5155e550e348ad2ed0996acf
 //Get
 onBeforeMount(async () => {
   await getHistory()
@@ -16,12 +20,22 @@ const getHistory = async () => {
     return history.value
   } else console.log('error, cannot get notes')
 }
+
+const removehis = async (id) => {
+  const res = await fetch(`http://localhost:5000/history/${id}`, {
+    method: 'DELETE'
+  })
+   if (res.status === 200) {
+    history.value = history.value.filter((history) => history.id !== id)
+    console.log('deleted successfully')
+  } else console.log('error, cannot delete data')
+}
+
 </script>
 <template>
+    <HistoryList :historys="history" @removehistory="removehis" />
 
-    <HistoryList :historys="history" />
 </template>
- 
-<style>
 
+<style>
 </style>
