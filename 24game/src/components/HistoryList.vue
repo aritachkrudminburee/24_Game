@@ -4,6 +4,10 @@ defineProps({
   historys: {
     type: Array,
     require: true
+  },
+  profile: {
+    type: Object,
+    require: true
   }
 })
 
@@ -14,6 +18,7 @@ defineProps({
     <h1>History List</h1>
     <div class="wrapper">
       <ul>
+        <p> Player : {{profile.name}} </p>
         <div class="historyList" v-for="(history, index) in historys" :key="index">
           <p> ROUND : {{ history.id }} , Number Set : {{ history.number }} , RESULT : {{ history.result }} </p>
           <router-link :to="{
