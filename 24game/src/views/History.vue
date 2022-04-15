@@ -3,10 +3,6 @@
 import { ref , onBeforeMount } from 'vue'
 import HistoryList from '../components/HistoryList.vue'
 const history = ref([])
-<<<<<<< HEAD
-=======
-const profile = ref([])
->>>>>>> ee67e46458e309cc5155e550e348ad2ed0996acf
 //Get
 onBeforeMount(async () => {
   await getHistory()

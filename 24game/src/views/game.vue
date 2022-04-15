@@ -77,11 +77,6 @@ const justNumbers = (string) => {
 const checkArray = (arraya, arrayb) => {
     let a = arraya;
     let b = arrayb;
-<<<<<<< HEAD
-=======
-    console.log(a)
-    console.log(b)
->>>>>>> ee67e46458e309cc5155e550e348ad2ed0996acf
     for (let i = 0; i < a.length; i++) {
         if (a[i] !== b[i]) {
             return -1
@@ -107,17 +102,10 @@ const check = () => {
     console.log(checkNum.sort())
     if (checkArray(reCheckNum.sort(), checkNum.sort()) !== -1) {
         if (24 == eval(inputAns.value)) {
-<<<<<<< HEAD
             result.value = "win"
         }
         else {
             result.value = "lose"
-=======
-            result.value = "WIN"
-        }
-        else {
-            result.value = "LOSE"
->>>>>>> ee67e46458e309cc5155e550e348ad2ed0996acf
         }
     }
     else {
@@ -159,7 +147,6 @@ onUpdated(() => checkvalue())
     <div>
         <h1 align="center">24 Game</h1>
         <p v-if="!status">
-<<<<<<< HEAD
         <p>Click To Button To Start The Game</p>
         <RandomButton @randomNumbers="randomNum()" />
         </p>
@@ -176,25 +163,6 @@ onUpdated(() => checkvalue())
             </p>
             <h4>Your Answer :</h4>
             <input type="text" v-model="input" />
-=======
-        <p>Click Random Button To Start The Game</p>
-        <RandomButton @randomNumbers="randomNum()" />
-        </p>
-        <div v-else-if="status">
-            <NumberButton :items="numbers" @NumberMe="cal($event) ;" /> <br/>
-            <RemoveButton @removeN="resetNum()" />
-            <h2>Your Answer </h2>
-            <input type="text" v-model="input" style="width: 350px; height: 40px" /> &nbsp; &nbsp;
-            <span v-if="input !== ''">
-                <RemoveInputButton @removeI="remove() ; " />
-            </span>
-            <OperatorsButton @operatorMe="cal($event) ;  " />
-            
-            <p v-if="statusSummit">
-                <SubmitButton @submit="createNewhistory()" />
-            </p>
-            
->>>>>>> ee67e46458e309cc5155e550e348ad2ed0996acf
         </div>
         <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4>
     </div>
@@ -202,16 +170,11 @@ onUpdated(() => checkvalue())
 
 <style>
 #app {
-<<<<<<< HEAD
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
-=======
-    text-align: center;
-    /* margin-top: 50px; */
->>>>>>> ee67e46458e309cc5155e550e348ad2ed0996acf
 }
 </style>
