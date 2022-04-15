@@ -1,4 +1,5 @@
 <script setup>
+import{ onMounted } from 'vue'
 
 defineEmits(['NumberMe'])
 defineProps({
@@ -7,14 +8,17 @@ defineProps({
         require: true
     }
 })
+onMounted(() => {
+    alert("Game is start")
+    })
 </script>
 
 <template>
     <div class="grid-container">
         <div v-for="(item, index) in items" :key="index">
             <div class="grid-number">
-                {{ item }} 
-                <!-- <button class="button-color" @click="$emit('NumberMe', item.toString())">{{ item }}</button> -->
+                <!-- {{ item }}  -->
+                <button class="button-color" @click="$emit('NumberMe', item.toString())">{{ item }}</button>
             </div>
         </div>
     </div>
