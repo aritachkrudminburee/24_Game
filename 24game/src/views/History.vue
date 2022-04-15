@@ -18,10 +18,8 @@ const getHistory = async () => {
 }
 </script>
 <template>
-
     <HistoryList :historys="history" />
 </template>
- 
-<style>
 
+<style>
 </style>

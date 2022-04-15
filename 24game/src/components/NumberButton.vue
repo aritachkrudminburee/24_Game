@@ -10,11 +10,11 @@ defineProps({
 </script>
 
 <template>
-<h2>Number Generator</h2>
     <div class="grid-container">
         <div v-for="(item, index) in items" :key="index">
             <div class="grid-number">
-                <button class="button-color" @click="$emit('NumberMe', item.toString())">{{ item }}</button>
+                {{ item }} 
+                <!-- <button class="button-color" @click="$emit('NumberMe', item.toString())">{{ item }}</button> -->
             </div>
         </div>
     </div>
@@ -30,15 +30,15 @@ defineProps({
 .grid-number {
     display: grid;
     border: 2px solid rgba(0, 0, 0, 1);
-    border-color: #ababab;
+    border-color: #6C4A3F;
     padding: 20px;
-    font-size: 30px;
-    font-family: "Trebuchet MS";
+    font-size: 40px;
+    color: #6C4A3F;
+    font-family: "Red Hat Display";
     text-align: center;
-    background-color: #FFFFFF;
+    background-color: #EFD6E5;
     outline: 2px solid #8c8eb8;
-    margin: 50px;
-    border-radius: 15px;
+    margin: 0px 15px 30px 15px;
 }
 .button-color {
     background-color: #FCEC90;

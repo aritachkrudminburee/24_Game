@@ -8,24 +8,22 @@ defineEmits(['removeI'])
 
 <style>
 .rmInputButton {
-  background-color: #FF2400; /* Green */
-  color: white;
-  padding: 16px 32px;
+  width: 200px;
+  height: 50px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  font-size: 22px;
+  font-family: "Ribeye";
   margin: 4px 2px;
-  opacity: 1.0;
-  transition-duration: 0.1s;
+  transition-duration: 0.4s;
   cursor: pointer;
-  border: 2px solid #FF2400;
+  background-color: white;
+  color: #896B60;
+  border: 2px solid #6C4A3F;
   border-radius: 25px;
 }
 
 .rmInputButton:hover {
-  background-color: #FF2400;
-  color: white;
-  opacity: 0.6;
+  background-color: #6C4A3F;
+  opacity: 0.8;
 }
 </style>

@@ -102,10 +102,10 @@ const check = () => {
     console.log(checkNum.sort())
     if (checkArray(reCheckNum.sort(), checkNum.sort()) !== -1) {
         if (24 == eval(inputAns.value)) {
-            result.value = "win"
+            result.value = "WIN"
         }
         else {
-            result.value = "lose"
+            result.value = "LOSE"
         }
     }
     else {
@@ -147,22 +147,23 @@ onUpdated(() => checkvalue())
     <div>
         <h1 align="center">24 Game</h1>
         <p v-if="!status">
-        <p>Click To Button To Start The Game</p>
+        <p>Click Random Button To Start The Game</p>
         <RandomButton @randomNumbers="randomNum()" />
         </p>
         <div v-else-if="status">
-            <p>Click To Button To Restart</p>
+            <NumberButton :items="numbers" @NumberMe="cal($event) ;" /> <br/>
             <RemoveButton @removeN="resetNum()" />
-            <NumberButton :items="numbers" @NumberMe="cal($event) ;" />
-            <OperatorsButton @operatorMe="cal($event) ;  " />
-            <p v-if="input !== ''">
+            <h2>Your Answer </h2>
+            <input type="text" v-model="input" style="width: 350px; height: 40px" /> &nbsp; &nbsp;
+            <span v-if="input !== ''">
                 <RemoveInputButton @removeI="remove() ; " />
-            </p>
+            </span>
+            <OperatorsButton @operatorMe="cal($event) ;  " />
+            
             <p v-if="statusSummit">
                 <SubmitButton @submit="createNewhistory()" />
             </p>
-            <h4>Your Answer :</h4>
-            <input type="text" v-model="input" />
+            
         </div>
         <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4>
     </div>
@@ -170,11 +171,7 @@ onUpdated(() => checkvalue())
 
 <style>
 #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
+    /* margin-top: 50px; */
 }
 </style>

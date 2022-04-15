@@ -7,30 +7,28 @@ onUnmounted(() => {
 </script>
  
 <template>
-    <button class="rmButton" @click="$emit('removeN')">Remove</button>
+    <button class="rmButton" @click="$emit('removeN')">Reset</button><br/>
 </template>
  
 <style>
 .rmButton {
-  background-color: #067D46; /* Green */
-  color: white;
-  padding: 16px 32px;
+  width: 150px;
+  height: 50px;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  font-size: 22px;
+  font-family: "Ribeye";
   margin: 4px 2px;
-  opacity: 0.8;
-  transition-duration: 0.1s;
+  transition-duration: 0.4s;
   cursor: pointer;
-  border: 2px solid #067D46;
+  background-color: #6C4A3F;
+  color: white;
+  border: 2px solid #6C4A3F;
   border-radius: 25px;
 }
 
 
 .rmButton:hover {
-  background-color: #067D46;
-  color: white;
-  opacity: 0.6;
+  background-color: #6C4A3F;
+  opacity: 0.8;
 }
 </style>
