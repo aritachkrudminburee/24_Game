@@ -1,5 +1,6 @@
 <script setup>
 defineEmits(['randomNumbers'])
+
 </script>
  
 <template>

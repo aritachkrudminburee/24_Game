@@ -158,13 +158,13 @@ onUpdated(() => checkvalue())
             <p v-if="input !== ''">
                 <RemoveInputButton @removeI="remove() ; " />
             </p>
-            <p v-if="statusSummit">
-                <SubmitButton @submit="createNewhistory()" />
-            </p>
             <h4>Your Answer :</h4>
             <input type="text" v-model="input" />
         </div>
         <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4>
+        <p v-if="statusSummit">
+                <SubmitButton @submit="createNewhistory()" />
+            </p>
     </div>
 </template>
 

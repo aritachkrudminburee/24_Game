@@ -15,6 +15,12 @@
         You do not have to use all four operations
     </p>
 </template>
+<style>
+
+body {
+    background-color: #FFC0CB;
+}
+h1 {
     margin: 45px 0 35px 0;
     color: #6C4A3F;
     font-size: 96px;

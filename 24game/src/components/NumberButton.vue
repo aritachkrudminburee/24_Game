@@ -1,5 +1,4 @@
 <script setup>
-import{ onMounted } from 'vue'
 
 defineEmits(['NumberMe'])
 defineProps({
@@ -8,9 +7,7 @@ defineProps({
         require: true
     }
 })
-onMounted(() => {
-    alert("Game is start")
-    })
+
 </script>
 
 <template>
