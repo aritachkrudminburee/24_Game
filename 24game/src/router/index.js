@@ -4,6 +4,7 @@ import NotFound from '../views/NotFound.vue'
 import Home from '../views/Home.vue'
 import Game from '../views/game.vue'
 import historylist from '../views/history.vue'
+import Profile from '../views/Profile.vue'
 const history = createWebHistory()
 const routes = [
   { path: '/Member', name: 'Member', component: Member },
@@ -22,6 +23,11 @@ const routes = [
     path: '/historylist',
     name: 'historylist',
     component: historylist
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
   }
 ]
 

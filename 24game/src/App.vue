@@ -4,6 +4,7 @@
   <div>
     <div>
       <router-link class="navBar" :to="{ name: 'Home' }">Home</router-link>
+      <router-link class="navBar" :to="{ name: 'Profile' }">Profile</router-link>
       <router-link class="navBar" :to="{ name: 'game' }">Play</router-link>
       <router-link class="navBar" :to="{ name: 'historylist' }">History</router-link>
       <router-link class="navBar" :to="{ name: 'Member' }">Members</router-link>

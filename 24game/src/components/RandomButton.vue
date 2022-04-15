@@ -1,9 +1,7 @@
 <script setup>
 import{ onUnmounted } from 'vue'
 defineEmits(['randomNumbers'])
-onUnmounted(() => {
-    alert("Game is start")
-    })
+
 </script>
  
 <template>
