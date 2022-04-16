@@ -17,7 +17,7 @@ onUnmounted(() => {
   text-align: center;
   font-size: 22px;
   font-family: "Ribeye";
-  margin: 4px 2px;
+  margin: 60px 2px 0px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
   background-color: #6C4A3F;

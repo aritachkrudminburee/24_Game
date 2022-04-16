@@ -1,61 +1,40 @@
 <script setup>
 import NumberButton from "../components/NumberButton.vue"
 import OperatorsButton from "../components/OperatorsButton.vue"
-import RandomButton from "../components/RandomButton.vue"
 import SubmitButton from "../components/SubmitButton.vue"
 import RemoveButton from '../components/RemoveButton.vue'
 import RemoveInputButton from '../components/RemoveInputButton.vue'
-
-import { ref, computed, onUpdated } from 'vue'
-
-////////////////////////////////////// ห้ามเเก้ของเก่า ////////////////
+import { ref, computed, onUpdated , } from 'vue'
+import { useRoute,useRouter  } from 'vue-router'
+const appRouter = useRouter()
+let { params } = useRoute()
 const input = ref('');
 const inputAns = ref('');
 const testValue = ref('');
-const dataError = [1111, 1678, 3467]
 const numbers = ref([]);
 const status = ref(false)
 const statusSummit = ref(false)
-const history = ref([])
 const result = ref('')
-/////fetch
-
-// POST
-const createNewhistory = async () => {
-    addInput();
-    const res = await fetch('http://localhost:5000/history', {
-        method: 'POST',
-        headers: {
-            'content-type': 'application/json'
-        },
-        body: JSON.stringify({ number: numbers.value, result: result.value })
-    })
-    if (res.status === 201) {
-        const addedhistory = await res.json()
-        history.value.push(addedhistory)
-        console.log('added sucessfully')
-    } else console.log('error, cannot be added')
-    resetNum();
-}
-
-////
-
-const randomNum = () => {
-    while (numbers.value.length < 4) {
-        var r = Math.floor(Math.random() * 9) + 1;
-        if (numbers.value.indexOf(r) === -1) numbers.value.push(r);
-        console.log(r)
-    }
-    for (let i = 0; i < dataError.length; i++) {
-        let myFunc = num => Number(num);
-        var intArr = Array.from(String(dataError[i]), myFunc);
-        console.log(intArr)
-        if (checkArray(intArr.sort(), Array.from(numbers.value).sort()) === 1) { numbers.value = []; randomNum(); }
-    }
+const continueHis = () => {
+ numbers.value.push(parseInt(params.Number1));
+ numbers.value.push(parseInt(params.Number2));
+ numbers.value.push(parseInt(params.Number3));
+ numbers.value.push(parseInt(params.Number4));
     status.value = true;
     console.log(numbers.value)
 }
-
+const editHistory = async () => {
+    addInput();
+  const res = await fetch(`http://localhost:5000/history/${params.id}`, {
+    method: "PUT",
+    headers: {
+      "content-type": "application/json",
+    },
+  body: JSON.stringify({ number: numbers.value, result: result.value })
+    })
+  await res.json()
+appRouter.push({name: 'historylist' })
+};
 const resetNum = () => {
     numbers.value = []
     input.value = ''
@@ -64,7 +43,6 @@ const resetNum = () => {
     status.value = false
     statusSummit.value = false
 }
-
 const addInput = () => {
     inputAns.value = input.value
     console.log(inputAns.value)
@@ -77,6 +55,8 @@ const justNumbers = (string) => {
 const checkArray = (arraya, arrayb) => {
     let a = arraya;
     let b = arrayb;
+    console.log(a)
+    console.log(b)
     for (let i = 0; i < a.length; i++) {
         if (a[i] !== b[i]) {
             return -1
@@ -109,20 +89,15 @@ const check = () => {
         }
     }
     else {
-        result.value = "Error! use incomplete numbers."
+        result.value = "Error use incomplete numbers "
     }
     alert(result.value)
 }
 const sumAns = computed(() => {
     return eval(inputAns.value);
 })
-//////////////////////////////////////
-
-
 const cal = (a) => { input.value = input.value + a, alert("you choose : " + a) }
-
 const remove = () => { input.value = input.value.slice(0, -1) }
-
 const checkvalue = () => {
     try {
         if (input.value === "") { return statusSummit.value = false; }
@@ -133,45 +108,16 @@ const checkvalue = () => {
     }
     return statusSummit.value = true;
 }
-
-//////////// lift cycle
-// onBeforeMount(() => alert("onBeforeMount")) 
-// onMounted (() => alert("onMounted"))
-// onBeforeUpdate(() => alert("onBeforeUpdate" + input.value))
 onUpdated(() => checkvalue())
-
-const checkDisabled = computed(() => {
-    let num1 = numbers.value.toString().trim()
-    let input1 = input.value.trim()
-    let strCheck = num1.includes(input1)
-    console.log(num1);
-    console.log(input1);
-    console.log(strCheck);
-    if(input1 == ""){
-        console.log("input false log");
-        return false
-    } else {
-        if(strCheck){
-            console.log("Yay");
-            return true
-        } else {
-            console.log("sad");
-            return false
-        }
-    }
-})
-/////////////
 </script>
 <template>
     <div>
         <h1 align="center">24 Game</h1>
         <p v-if="!status">
-        <p>Click Random Button To Start The Game</p>
-        <RandomButton @randomNumbers="randomNum()" />
+        <button class="stButton" @click="continueHis">Start To Retry</button>
         </p>
         <div v-else-if="status">
-            <NumberButton :isDisabled="checkDisabled.value" :items="numbers" @NumberMe="cal($event) ;" />
-            <!-- input.value.includes(numbers.value.toString()) -->
+            <NumberButton :items="numbers" @NumberMe="cal($event) ;" /> <br/>
             <RemoveButton @removeN="resetNum()" />
             <h2>Your Answer </h2>
             <input type="text" v-model="input" style="width: 350px; height: 40px" /> &nbsp; &nbsp;
@@ -179,11 +125,11 @@ const checkDisabled = computed(() => {
                 <RemoveInputButton @removeI="remove() ; " />
             </span> &nbsp;
             <span v-if="statusSummit">
-                <SubmitButton @submit="createNewhistory()" />
+                <SubmitButton @submit="editHistory()" />
             </span>
             <OperatorsButton @operatorMe="cal($event) ;  " />
         </div>
-        <!-- <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4> -->
+        <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4>
     </div>
 </template>
 

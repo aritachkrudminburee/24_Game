@@ -4,7 +4,7 @@
  
 <template>
     <br/>
-    <img class="logoImg" src="../assets/logo.png" /> 
+    <img class="logoImg" src="../assets/logo.png" />
     <h1>24 Game</h1>
     <!-- <button class="stButton"><router-link :to="{ name: 'game' }">Play</router-link></button> -->
     <p class="descBox">

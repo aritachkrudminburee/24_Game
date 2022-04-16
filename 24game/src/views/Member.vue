@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from 'vue'
-const unknowImg = ref('../images/gitrepo-project1.jpg')
 </script>
 
 <template>

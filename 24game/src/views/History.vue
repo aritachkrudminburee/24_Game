@@ -1,4 +1,3 @@
-
 <script setup>
 import { ref , onBeforeMount } from 'vue'
 import HistoryList from '../components/HistoryList.vue'
@@ -16,9 +15,19 @@ const getHistory = async () => {
     return history.value
   } else console.log('error, cannot get notes')
 }
+
+const removehis = async (id) => {
+  const res = await fetch(`http://localhost:5000/history/${id}`, {
+    method: 'DELETE'
+  })
+   if (res.status === 200) {
+    history.value = history.value.filter((history) => history.id !== id)
+    console.log('deleted successfully')
+  } else console.log('error, cannot delete data')
+}
 </script>
 <template>
-    <HistoryList :historys="history" />
+    <HistoryList :historys="history" @removehistory="removehis"/>
 </template>
 
 <style>
