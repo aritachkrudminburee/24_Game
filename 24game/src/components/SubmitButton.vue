@@ -1,12 +1,10 @@
 <script setup>
-
 defineEmits(['submit'])
 defineProps({
     inputs: {
         type: String,
     }
 })
-
 </script>
  
 <template>

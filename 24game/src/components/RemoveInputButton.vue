@@ -21,7 +21,6 @@ defineEmits(['removeI'])
   border: 2px solid #6C4A3F;
   border-radius: 25px;
 }
-
 .rmInputButton:hover {
   background-color: #6C4A3F;
   opacity: 0.8;

@@ -40,6 +40,7 @@ const createNewhistory = async () => {
 
 ////
 
+
 const randomNum = () => {
     while (numbers.value.length < 4) {
         var r = Math.floor(Math.random() * 9) + 1;
@@ -77,6 +78,8 @@ const justNumbers = (string) => {
 const checkArray = (arraya, arrayb) => {
     let a = arraya;
     let b = arrayb;
+    console.log(a)
+    console.log(b)
     for (let i = 0; i < a.length; i++) {
         if (a[i] !== b[i]) {
             return -1

@@ -4,8 +4,13 @@ defineProps({
   historys: {
     type: Array,
     require: true
+  },
+  profile: {
+    type: Object,
+    require: true
   }
 })
+
 </script>
 
 <template>
@@ -32,10 +37,11 @@ defineProps({
 
 <style>
 .historyList {
-    font-family:"Red Hat Display";
-    font-size: 20px;
-    line-height: 35px;
+  font-family: "Red Hat Display";
+  font-size: 20px;
+  line-height: 35px;
 }
+
 .wrapper {
   background-color: #F5F2EA;
   margin: 20px 400px 0 400px;

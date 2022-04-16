@@ -1,9 +1,6 @@
 <script setup>
 import{ onUnmounted } from 'vue'
 defineEmits(['removeN'])
-onUnmounted(() => {
-    alert("Game is end")
-    })
 </script>
  
 <template>

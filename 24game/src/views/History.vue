@@ -2,6 +2,7 @@
 import { ref , onBeforeMount } from 'vue'
 import HistoryList from '../components/HistoryList.vue'
 const history = ref([])
+const profile = ref([])
 //Get
 onBeforeMount(async () => {
   await getHistory()
