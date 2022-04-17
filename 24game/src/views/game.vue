@@ -95,7 +95,6 @@ const check = () => {
         var checkNum = Array.from(number.toString()).map(Number)//เปลี่ยนค่าใน array ให้กลายเป็น ตัวเลข
     }
     catch (err) {
-        alert("Error for input value")
         input.value = ''
         isError.value = true
     }
@@ -109,7 +108,7 @@ const check = () => {
         }
     }
     else {
-        result.value = "Error use incomplete numbers "
+        result.value = "Error! use incomplete numbers."
     }
     alert(result.value)
 }
@@ -119,7 +118,7 @@ const sumAns = computed(() => {
 //////////////////////////////////////
 
 
-const cal = (a) => { input.value = input.value + a, alert("you choose : " + a) }
+const cal = (a) => { input.value = input.value + a }
 
 const remove = () => { input.value = input.value.slice(0, -1) }
 
@@ -140,8 +139,27 @@ const checkvalue = () => {
 // onBeforeUpdate(() => alert("onBeforeUpdate" + input.value))
 onUpdated(() => checkvalue())
 
+const checkDisabled = computed(() => {
+    let num1 = numbers.value.toString().trim()
+    let input1 = input.value.trim()
+    let strCheck = num1.includes(input1)
+    console.log(num1);
+    console.log(input1);
+    console.log(strCheck);
+    if(input1 == ""){
+        console.log("input false log");
+        return false
+    } else {
+        if(strCheck){
+            console.log("Yay");
+            return true
+        } else {
+            console.log("sad");
+            return false
+        }
+    }
+})
 /////////////
-
 </script>
 <template>
     <div>
@@ -150,21 +168,21 @@ onUpdated(() => checkvalue())
         <p>Click To Button To Start The Game</p>
         <RandomButton @randomNumbers="randomNum()" />
         </p>
-        <div v-show="status">
-            <p>Click To Button To Restart</p>
+        <div v-else-if="status">
+            <NumberButton :isDisabled="checkDisabled.value" :items="numbers" @NumberMe="cal($event) ;" />
+            <!-- input.value.includes(numbers.value.toString()) -->
             <RemoveButton @removeN="resetNum()" />
-            <NumberButton :items="numbers" @NumberMe="cal($event) ;" />
-            <OperatorsButton @operatorMe="cal($event) ;  " />
-            <p v-if="input !== ''">
+            <h2>Your Answer </h2>
+            <input type="text" v-model="input" style="width: 350px; height: 40px" /> &nbsp; &nbsp;
+            <span v-if="input !== ''">
                 <RemoveInputButton @removeI="remove() ; " />
-            </p>
-            <h4>Your Answer :</h4>
-            <input type="text" v-model="input" />
-        </div>
-        <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4>
-        <p v-if="statusSummit">
+            </span> &nbsp;
+            <span v-if="statusSummit">
                 <SubmitButton @submit="createNewhistory()" />
-            </p>
+            </span>
+            <OperatorsButton @operatorMe="cal($event) ;  " />
+        </div>
+        <!-- <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4> -->
     </div>
 </template>
 

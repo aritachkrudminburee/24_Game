@@ -2,13 +2,83 @@
   "history": [
     {
       "number": [
-        9,
-        8,
         1,
-        6
+        3,
+        8,
+        2
       ],
       "result": "Error use incomplete numbers ",
+      "id": 1
+    },
+    {
+      "number": [
+        8,
+        7,
+        4,
+        2
+      ],
+      "result": "WIN",
       "id": 2
+    },
+    {
+      "number": [
+        4,
+        6,
+        5,
+        1
+      ],
+      "result": "Error! use incomplete numbers.",
+      "id": 3
+    },
+    {
+      "number": [
+        1,
+        6,
+        3,
+        9
+      ],
+      "result": "LOSE",
+      "id": 6
+    },
+    {
+      "number": [
+        7,
+        2,
+        8,
+        9
+      ],
+      "result": "Error! use incomplete numbers.",
+      "id": 7
+    },
+    {
+      "number": [
+        3,
+        8,
+        6,
+        9
+      ],
+      "result": "Error! use incomplete numbers.",
+      "id": 8
+    },
+    {
+      "number": [
+        8,
+        9,
+        3,
+        1
+      ],
+      "result": "win",
+      "id": 9
+    },
+    {
+      "number": [
+        8,
+        3,
+        1,
+        2
+      ],
+      "result": "win",
+      "id": 10
     }
   ]
 }

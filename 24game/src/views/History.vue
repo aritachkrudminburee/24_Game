@@ -1,4 +1,3 @@
-
 <script setup>
 import { ref , onBeforeMount } from 'vue'
 import HistoryList from '../components/HistoryList.vue'
@@ -26,11 +25,9 @@ const removehis = async (id) => {
     console.log('deleted successfully')
   } else console.log('error, cannot delete data')
 }
-
 </script>
 <template>
-    <HistoryList :historys="history" @removehistory="removehis" />
-
+    <HistoryList :historys="history" @removehistory="removehis"/>
 </template>
 
 <style>

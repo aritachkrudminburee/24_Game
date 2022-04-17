@@ -6,7 +6,6 @@ import RemoveButton from '../components/RemoveButton.vue'
 import RemoveInputButton from '../components/RemoveInputButton.vue'
 import { ref, computed, onUpdated , } from 'vue'
 import { useRoute,useRouter  } from 'vue-router'
-
 const appRouter = useRouter()
 let { params } = useRoute()
 const input = ref('');
@@ -16,7 +15,6 @@ const numbers = ref([]);
 const status = ref(false)
 const statusSummit = ref(false)
 const result = ref('')
-
 const continueHis = () => {
  numbers.value.push(parseInt(params.Number1));
  numbers.value.push(parseInt(params.Number2));
@@ -25,8 +23,6 @@ const continueHis = () => {
     status.value = true;
     console.log(numbers.value)
 }
-
-
 const editHistory = async () => {
     addInput();
   const res = await fetch(`http://localhost:5000/history/${params.id}`, {
@@ -39,9 +35,6 @@ const editHistory = async () => {
   await res.json()
 appRouter.push({name: 'historylist' })
 };
-
-
-
 const resetNum = () => {
     numbers.value = []
     input.value = ''
@@ -50,7 +43,6 @@ const resetNum = () => {
     status.value = false
     statusSummit.value = false
 }
-
 const addInput = () => {
     inputAns.value = input.value
     console.log(inputAns.value)
@@ -83,7 +75,7 @@ const check = () => {
         var checkNum = Array.from(number.toString()).map(Number)//เปลี่ยนค่าใน array ให้กลายเป็น ตัวเลข
     }
     catch (err) {
-        alert("Error for input value")
+        
         input.value = ''
         isError.value = true
     }
@@ -104,12 +96,8 @@ const check = () => {
 const sumAns = computed(() => {
     return eval(inputAns.value);
 })
-
-
-const cal = (a) => { input.value = input.value + a, alert("you choose : " + a) }
-
+const cal = (a) => { input.value = input.value + a }
 const remove = () => { input.value = input.value.slice(0, -1) }
-
 const checkvalue = () => {
     try {
         if (input.value === "") { return statusSummit.value = false; }
@@ -120,15 +108,13 @@ const checkvalue = () => {
     }
     return statusSummit.value = true;
 }
-
 onUpdated(() => checkvalue())
-
 </script>
 <template>
     <div>
         <h1 align="center">24 Game</h1>
         <p v-if="!status">
-        <button @click="continueHis">Start To Retry</button>
+        <button class="stButton" @click="continueHis">Start To Retry</button>
         </p>
         <div v-else-if="status">
             <NumberButton :items="numbers" @NumberMe="cal($event) ;" /> <br/>
@@ -137,13 +123,11 @@ onUpdated(() => checkvalue())
             <input type="text" v-model="input" style="width: 350px; height: 40px" /> &nbsp; &nbsp;
             <span v-if="input !== ''">
                 <RemoveInputButton @removeI="remove() ; " />
+            </span> &nbsp;
+            <span v-if="statusSummit">
+                <SubmitButton @submit="editHistory()" />
             </span>
             <OperatorsButton @operatorMe="cal($event) ;  " />
-            
-            <p v-if="statusSummit">
-                <SubmitButton @submit="editHistory()" />
-            </p>
-            
         </div>
         <h4 v-show="sumAns">Your result of previous answer {{ sumAns }}</h4>
     </div>

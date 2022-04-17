@@ -1,23 +1,40 @@
 <script setup>
-
+import {ref,computed,onUpdated,onMounted} from 'vue'
 defineEmits(['NumberMe'])
-defineProps({
+const prop = defineProps({
     items: {
         type: [Array, Object],
         require: true
+    },
+    isDisabled: {
+        type: Boolean,
+        default: true
     }
 })
-
+// const disabled = ref(false)
+// // const disableChoose = computed(() => {
+// //     console.log(disabled.value);
+// //     return disabled.value = prop.isDisabled
+// // })
+// // onUpdated(() => console.log(disabled.value))
+// onMounted(() => {
+//     alert("Game is start")
+//     })
+// const status = ref([false,false,false,false])
+// const changeStatus = (index) => {
+//     status.value[index] = !status.value[index]
+// }
 </script>
 
 <template>
 <p>Number Generator</p>
     <div class="grid-container">
-        <div v-for="(item, index) in items" :key="index">
+        <div v-for="(item, index) in prop.items" :key="index">
             <div class="grid-number">
-                <!-- {{ item }}  -->
-                <button class="button-color" @click="$emit('NumberMe', item.toString())">{{ item }}</button>
+                {{ item }}
             </div>
+            <button class="button-color" @click="$emit('NumberMe', item.toString())">{{ "Choose" }} </button>
+            
         </div>
     </div>
 </template>
@@ -43,10 +60,22 @@ defineProps({
     margin: 0px 15px 30px 15px;
 }
 .button-color {
-    background-color: #FCEC90;
-    width: 60px;
-    height: 40px;
-    border: 1px solid;
-    border-radius: 10px;
+    background-color: #EFD6E5;
+    color: #6C4A3F;
+    font-family: "Red Hat Display";
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    width: 150px;
+    height: 50px;
+    border: 2px solid #785346;
+    border-radius: 25px;
+}
+.button-color:disabled {
+    background-color: #E33434;
+}
+.button-color:hover {
+  background-color: #f79ed4;
+  opacity: 0.8;
 }
 </style>
